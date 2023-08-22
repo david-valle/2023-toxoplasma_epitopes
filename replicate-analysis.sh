@@ -4,7 +4,7 @@
 # See Readme.md for more info
 
 # Step 0 create intermediates and results dirs
-mkdir -p inetermediates
+mkdir -p intermediates
 mkdir -p results
 
 # Step 1 -- Predict epitopes
