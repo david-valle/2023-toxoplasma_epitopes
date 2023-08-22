@@ -1,0 +1,5 @@
+# ignore any result
+results/*
+
+# ingnore any intermediate
+intermediates/*
