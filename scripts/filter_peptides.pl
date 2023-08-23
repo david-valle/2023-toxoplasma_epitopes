@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 use strict;
 
-## Usage perlito-filtra_peptidos.pl FILE SCORE; SCORE is the minimum score
+## Usage filter-peptides.pl FILE SCORE; SCORE is the minimum score
 
 open (FILE, $ARGV[0]) || die "\nError: The file $ARGV[0] does not exist\n\n";
 
