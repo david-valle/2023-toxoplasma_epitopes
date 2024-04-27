@@ -1,6 +1,8 @@
 # 2023-toxoplasma_epitopes
 Code for finding toxoplasma epitopes common to human brain proteins
 
+# needs to be updated! the infi bellow is just an example
+
 ### Workflow overview
 TO-DO: Include code flow
 
@@ -98,13 +100,7 @@ git@github.com:Iaguilaror/low_BMD_in_PMWMX.git
 ```
 ./paper-results/
 ```
----
 
-## Testing the pipeline with Docker:
-
-* Estimated test time:  **X minute(s)**  
-
-TO-DO
 
 ---
 
@@ -154,12 +150,6 @@ Inside the directory paper-results/ you can find the following:
 * A `PCA_diagnostic.png image` same as above but showing a panel with: screeplot, labeled PCA, a Parallel Coordinate Plot, and a biplot. Meant to provide an overview of the whole PCA.  
 
 ---
-
-### Docker usage
-
-TO-DO
-
----
 #### References
 Under the hood Proteomic compare uses some coding tools, please include the following ciations in your work:
 
@@ -172,10 +162,10 @@ TO-DO: explore citations and ackowledgments for used R packages.
 ---
 
 ### Contact
-If you have questions, requests, or bugs to report, open an issue in github, or email <iaguilaror@gmail.com>
+If you have questions, requests, or bugs to report, open an issue in github, or email <david.valle.edu@gmail.com>
 
 #### Dev Team
-Israel Aguilar-Ordonez <iaguilaror@gmail.com>   
+David Valle-Garcia <david.valle.edu@gmail.com>   
 
 ### Cite us
  TO-DO
