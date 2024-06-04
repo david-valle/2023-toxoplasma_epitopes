@@ -32,12 +32,14 @@ If you have questions, problems or suggestions, contact David Valle-Garcia (see 
 
 #### Command line Software required:
 | Requirement | Version  | Required Commands * |
-
+| :---:   | :---: | :---: |
 | [Anaconda](https://www.anaconda.com/download) | 2.6.0 | conda |
 
 Note: Anaconda is the only package that needs to be installed. Other conda environments such as miniconda should also work but are untested. See environment setup for more info
 
 These programs are needed if you wish to use your own environment (not needed if you will use Anaconda):
+| Requirement | Version  | Required Commands * |
+| :---:   | :---: | :---: |
 | [Perl](https://www.perl.org/) | 5.3.30 | perl |
 | [Python](https://www.python.org/) | 3.12.13 | python |
 | [R](https://www.r-project.org/) | 4.3.3 | Rscript |
