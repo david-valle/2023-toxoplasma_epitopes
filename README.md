@@ -73,7 +73,6 @@ cd 2023-toxoplasma_epitopes
 Run: 
 ```
 conda env create -f ./env/epitopes_conda.yml
-
 ```
 ```
 conda activate epitopes
@@ -89,6 +88,7 @@ conda activate epitopes
 ./replicate-analysis.sh test
 ```
 Note that test data does not give any matching epitope but the pipeline should run very fast. 
+
 ---
 
 ## Replicate our analysis:
