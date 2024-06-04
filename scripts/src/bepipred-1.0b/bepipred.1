@@ -1,0 +1,126 @@
+.de Id
+.ds Rv \\$3
+.ds Dt \\$4
+..
+.Id $Header: example.1,v 1.2 94/02/15 13:28:25 rapacki Exp $
+.TH bepipred 1 \" -*- nroff -*-
+.SH NAME
+bepipred \- predict location of linear B-cell epitopes
+.SH SYNOPSIS
+.B bepipred
+[\fB\-h\fP]
+[\fB\-k\fP]
+[\fB\-s\fP]
+[\fB\-t\fP \fI#\fP]
+[\fB\-V\fP]
+[\fIfile ...\fP]
+.SH DESCRIPTION
+.B bepipred
+predicts the location of linear B-cell epitopes in protein
+sequences using a combination of a hidden Markov model and a propensity
+scale method. The method is described in detail in the reference quoted
+below.
+
+The input sequences are read from \fIfile\fP or, if no file is specified,
+from \fIstdin\fP. The input must be in \fBFASTA\fP format. All the
+non-standard amino acids in
+the input i.e. not in <\fBACDEFGHIKLMNPQRSTVWY\fP>
+are replaced with alanine (\fIA\fP).
+
+The output is in \fBGFF\fP format (see \fBCOMMENTS\fP); it will go
+to \fIstdout\fP. The columns are:
+
+   \fB*\fP sequence name (truncated to 20 characters);
+   \fB*\fP prediction source: 'bepipred-version';
+   \fB*\fP predicted feature: 'epitope';
+   \fB*\fP residue number (two columns);
+   \fB*\fP prediction score;
+   \fB*\fP non-applicable (two columns);
+   \fB*\fP assignment: 'E' for part of an epitope, else
+                 '.' (dot).
+
+The probability of a residue being a part of a linear B-cell epitope
+increases with the prediction score for that residue. The threshold
+for assigning a residue to 'E' may be adjusted by the user (\fB\-t\fP)
+reflecting the need for prediction sensitivity/specificity.
+
+The table below offers guidelines for choosing a suitable threshold; it
+shows the relationship between selected thresholds and
+the sensitivity/specificity of the predictions. The table is based
+on the analysis of the prediction scores
+from the test data set used in the development of
+.B bepipred
+(Pellequer data set, see \fBREFERENCE\fP).
+
+   Threshold     Sensitivity   Specificity
+
+    -0.20           0.75          0.50
+.br
+     0.20           0.56          0.68
+.br
+     \fB0.35           0.49          0.75\fP
+.br
+     0.90           0.25          0.91
+.br
+     1.30           0.13          0.96
+
+The default threshold is \fB0.35\fP. When applied to the prediction scores
+obtained from the  Pellequer data set it renders the same 
+epitope density as the density determined experimentally
+for that data set. Therefore, \fB0.35\fP is a suitable start value for
+fine-tuning of the threshold to fit the user's needs.
+
+By default the input sequences are not included in the output. This can be
+changed by the user (\fB\-s\fP).
+.SH OPTIONS
+.TP
+.BI "\-h"
+Print the allowed command line syntax and exit.
+.TP
+.BI "\-k"
+Keep the temporary files.
+.TP
+.BI "\-s"
+Include the input sequences in the output.
+.TP
+.BI "\-t" " #"
+Use \fI#\fP as threshold. The default is 0.35 (see above).
+.TP
+.BI "\-V"
+Print the current version number and exit.
+.TP
+.I file ...
+The sequence file(s) to process, in \fBFASTA\fP
+format. If no file is specified, \fIstdin\fP will be used instead.
+.SH COMMENTS
+.B GFF
+is described in detail at:
+
+   \fBhttp://www.sanger.ac.uk/Software/formats/GFF/\fP
+
+It has been chosen as output format due to the abundance of
+.B GFF
+parsing software and compatibility with many other prediction methods.
+.SH AUTHOR
+Jens Erik Pontoppidan Larsen, jepl@cbs.dtu.dk, July 2006
+.br
+Last updated in Aug 2006 (v. 1.0b).
+.SH REFERENCE
+The method is described in detail in the article:
+
+Improved method for predicting linear B-cell epitopes.
+.br
+Jens Erik Pontoppidan Larsen, Ole Lund and Morten Nielsen
+.br
+Immunome Research 2:2, 2006.
+
+Center for Biological Sequence Analysis
+BioCentrum-DTU
+Technical University of Denmark
+DK-2800 Lyngby, Denmark
+.SH FILES
+\fB/usr/cbs/bio/bin/bepipred\fP           executable
+.br
+\fB/usr/cbs/bio/src/bepipred-1.0b\fP      software home
+.SH SEE ALSO
+fasta (1).

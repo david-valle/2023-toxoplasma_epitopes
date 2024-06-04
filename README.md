@@ -1,71 +1,82 @@
 # 2023-toxoplasma_epitopes
 Code for finding toxoplasma epitopes common to human brain proteins
 
-### Workflow overview
-TO-DO: Include code flow
+### Description
 
-===  
+This code can search for potentially immunogenic peptides on T. gondii (or any other organisim if the proper files are provided by the user) and then it matches them with human membrane or extracellular proteins expressed in brain. It then performs a random sampling of non-brain proteins to asess the reliabality of its findings and then analyzes the expression patter of such matches in data derived from developing mice. 
 
-- TO-DO: Descrition at large
-
-- This pipeline is meant to reproduce the results in: TO-DO-add url and doi after paper is published
-
-The pipeline takes as INPUT an excel samplesheet created by UGPM, LaNSE, Cinvestav-IPN from a Synapt G2-Si Mass Spectrometer. Contact Emmanuel Castro-Rios (eriosc@cinvestav.mx) for more info. It also takes a .csv samplesheet describing sampleID_replicate and the condition (i.e. control vs treatment). 
-
-'Proteomic compare' is a pipeline tool that takes peptide quantifications in excel format and process it to generate a volcano plot and PCA of comparisons between conditions. This pipeline generates the followin outputs:  
-For each INPUT .xlsx
-1) a figurte of a volcano plot with UP and DOWN peptides;  
-2) a figure same as 1) but with labeled peptides;  
-3) a figure of a PCA plot created from the UP and DOWN peptides;
-4) a figure of a panel diagnostics for 3), including a screeplot, a Parallel Coordinate Plot, a Biplot, and a labeled PCA with sample names.  
+If you have questions, problems or suggestions, contact David Valle-Garcia (see contact info below)
 
 ---
 
 ### Features
-  **-v 0.0.1**
+  **-v 0.0.2**
 
-* Supports .xlsx files from  UGPM, LaNSE, Cinvestav-IPN from a Synapt G2-Si Mass Spectrometer
-* Results include labelled and unlabelled volcano plot
-* Results include PCA and a diagnostics screeplot, PCP, and biplot
-* Scalability and reproducibility via a Nextflow-based framework
+* Replicates the whole analysis
+* Performs random sampling (note that, as this is random, the results may be slightly different each time you run it).
 
-### TO-DO(s)  
-* Easy deploy with docker
-* Make docker outputs not root owned
+### TO-DO(s) in future iterations  
+* Change all scripts to Python
+<<<<<<< HEAD
+=======
+* Make a conda environment for easy deployment and installation
+>>>>>>> 7a1f33cb02a7efb76a866844852550df165c738a
 
 ---
 
 ## Requirements
 #### Compatible OS*:
 * [Ubuntu 20.04.5 LTS](https://releases.ubuntu.com/focal/)
+* MacOS 14.3
 
 #### Incompatible OS*:
 * UNKNOWN  
 
-\* Proteomic compare may run in other UNIX based OS and versions, but testing is required.  
+\* The script should run in other UNIX based OS and versions, but testing is required.  
 
 #### Command line Software required:
 | Requirement | Version  | Required Commands * |
+<<<<<<< HEAD
+
+| [Anaconda](https://www.anaconda.com/download) | 2.6.0 | conda |
+
+Note: Anaconda is the only package that needs to be installed. Other conda environments such as miniconda should also work but are untested. See environment setup for more info
+=======
 |:---------:|:--------:|:-------------------:|
-| [Nextflow](https://www.nextflow.io/docs/latest/getstarted.html) | 22.10.4 | nextflow |
-| [R](https://www.r-project.org/) | 4.2.2 | Rscript |
+| [Perl](https://www.perl.org/) | 5.3.30 | perl |
+| [R](https://www.r-project.org/) | 4.3.3 | Rscript |
+| [Python](https://www.python.org/) | 3.12.13 | python |
+| [Linear B cell epitope predictor](http://tools.iedb.org/bcell/download/) | 3.0 | predict_antibody_epitope.py |
+| [blastp](https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html) | 2.6.0 | blastp |
+| [Conda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) | 24.1.2 | conda |
 
 \* These commands must be accessible from your `$PATH` (*i.e.* you should be able to invoke them from your command line).  
+Note: conda is not needed but advised to install all python packages and dependencies.
 
-#### R packages required:
+
+#### Python packages required:
 
 ```
+bedtools version: 2.30.0
+```
+>>>>>>> 7a1f33cb02a7efb76a866844852550df165c738a
+
+These programs are needed if you wish to use your own environment (not needed if you will use Anaconda):
+| [Perl](https://www.perl.org/) | 5.3.30 | perl |
+| [Python](https://www.python.org/) | 3.12.13 | python |
+| [R](https://www.r-project.org/) | 4.3.3 | Rscript |
+| [Linear B cell epitope predictor](http://tools.iedb.org/bcell/download/) | 3.0 | predict_antibody_epitope.py |
+| [blastp](https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html) | 2.6.0 | blastp |
+
+#### Python packages required (included in conda environment you dont need to install them):
+
+```
+<<<<<<< HEAD
+bedtools version: 2.30.0
+blast version: 2.15.0
+=======
 cowplot version: 1.1.1
-dplyr version: 1.1.2
-factoextra version: 1.0.7
-ggplot2 version: 3.4.2
-ggrepel version: 0.9.3
-ggsci version: 3.0.0
-matrixStats version: 1.0.0
-openxlsx version: 4.2.5.2
-scales version: 1.2.1
-stringr version: 1.5.0
-tidyr version: 1.3.0
+>>>>>>> 7a1f33cb02a7efb76a866844852550df165c738a
 ```
 
 ---
@@ -73,109 +84,141 @@ tidyr version: 1.3.0
 ### Installation
 Download pipeline from Github repository:  
 ```
-git@github.com:Iaguilaror/low_BMD_in_PMWMX.git
+<<<<<<< HEAD
+git clone https://github.com/david-valle/2023-toxoplasma_epitopes
+cd 2023-toxoplasma_epitopes
+=======
+git@github.com:david-valle/2023-toxoplasma_epitopes.git
+>>>>>>> 7a1f33cb02a7efb76a866844852550df165c738a
 ```
 
 ---
 
-## Replicate our analysis (Testing the pipeline):
-
-* Estimated test time:  **5 minute(s)**  
-
-1. To test pipeline execution using test data, run:  
+<<<<<<< HEAD
+### Environment set up
+Run: 
 ```
-./runtest.sh
+conda env create -f ./env/epitopes_conda.yml
+conda activate epitopes
 ```
 
-2. Your console should print the Nextflow log for the run, once every process has been submitted, the following message will appear:  
+---
+
+### Test our pipeline
+
+* Estimated test time:  **1 minute or less**  
+=======
+## Replicate our analysis:
+
+* Estimated test time:  **20 minute(s)**  
+
+1. To execute our pipeline, run:  
+```
+./replicate-analysis.sh
+```
+
+2. Your console should print some messages while the analyses are being performed. At the end it should print:  
 ```
 ======
- Basic pipeline TEST SUCCESSFUL
+ ALL DONE!
 ======
 ```
 
 3. Pipeline results for test data should be in the following directory:  
 ```
-./paper-results/
+./results/
 ```
+>>>>>>> 7a1f33cb02a7efb76a866844852550df165c738a
+
+```
+./replicate-analysis.sh test
+```
+Note that test data does not give any matching epitope but the pipeline should run very fast. 
 ---
 
-## Testing the pipeline with Docker:
+<<<<<<< HEAD
+## Replicate our analysis:
 
-* Estimated test time:  **X minute(s)**  
+* Estimated test time:  **20 minute(s)**  
 
-TO-DO
-
----
-
-### Usage
-TO-DO
-
-### Pipeline Inputs
-
-* An `.xlsx excel samplesheet` created by UGPM, LaNSE, Cinvestav-IPN from a Synapt G2-Si Mass Spectrometer. Contact Emmanuel Castro-Rios (eriosc@cinvestav.mx) for more info.  
-
-NAMING CONVENTION: filename should be CONDITION1_vs_CONDITION2.xlsx, because the condition names will be taken from the filename.  
-
-Example contents  
+1. To execute our pipeline, run:  
 ```
-sheet number or name: 1
-Accession	Peptide count	Unique peptides	Confidence score	Anova (p)	nlog.Anova	q Value	Max fold change	Power	Highest mean condition	Lowest mean condition	Mass	Description	20220608_34_HDMSE_N_P1_R001	20220608_34_HDMSE_N_P1_R002	20220608_34_HDMSE_N_P1_R003	20220608_35_HDMSE_N_P2_R001
-Q2M243;J3QKX2	5	1	27.3012	3.90E-08	7.40898498193687	3.45E-07	4.42850961640127	0.999999916484847	Normal	Osteoporosis	75867.8723	Coiled-coil domain-containing protein 27 OS=Homo sapiens OX=9606 GN=CCDC27 PE=1 SV=2	37894.2229766787	44809.8331347101	37940.595720904	61166.4163882289
-...
+./replicate-analysis.sh run
 ```
 
-* A `.csv samplesheet` describing sampleID_replicate and the condition.  
-Example lines  
+2. Your console should print some messages while the analyses are being performed. At the end it should print:  
 ```
-muestra	condition
-20220608_34_HDMSE_N_P1_R001	Normal
-20220608_34_HDMSE_N_P1_R002	Normal
-20220608_34_HDMSE_N_P1_R003	Normal
-20220608_44_HDMSE_OP_PI_R001	OP
-20220608_44_HDMSE_OP_PI_R002	OP
-20220608_44_HDMSE_OP_PI_R003	OP
-...
+======
+ ALL DONE!
+======
 ```
+
+3. Pipeline results for test data should be in the following directory:  
+```
+./results/
+```
+
 ---
 
 ### Pipeline Results
 
-Inside the directory paper-results/ you can find the following:
+Inside the directory results/ you can find the following:
 
-* A `.volcano.png figure` with the figure showing a volcano plot.  
+* `merged-epitopes.bed  |  bed file` A file with the epitopes coordinates from T. gondii.  
 
-* A `.volcano.named.png image` same as above but highlighting top UP and DOWN peptides.  
+* `sequence-epitopes.fasta  |  fasta file` A file containing epitopes sequences.  
 
-* A `.UP_and_DOWN_hits.xlsx excel file` that includes only UP and DOWN differentiated peptides according to the thresholds hardcoded in the volcano.R script.  
+* `human-proteins-cell_surface-BrainS.fasta  |  fasta file` A file containing BrainS sequences.  
 
-* A `.PCA_main.png figure` with the figure showing a PCA for two conditions.  
+* `ids-proteins-cell_surface-BrainS.txt  |  txt file` A file containing the ids of BrainS sequences.   
 
-* A `PCA_diagnostic.png image` same as above but showing a panel with: screeplot, labeled PCA, a Parallel Coordinate Plot, and a biplot. Meant to provide an overview of the whole PCA.  
+* `human-proteins-cell_surface-NO_BrainS.fasta  |  fasta file` A file containing NO BrainS sequences. 
+=======
+### Pipeline Results
+
+Inside the directory results/ you can find the following:
+
+* A `.merged-all_methods.bed bed file` A file with the epitopes coordinates from T. gondii.  
+
+* A `.sequence-all_methods.fasta fasta file` A file containing epitopes sequences.   
+>>>>>>> 7a1f33cb02a7efb76a866844852550df165c738a
+
+* `ids-proteins-cell_surface-NO_BrainS.txt  |  txt file` A file containing the ids of BrainS sequences. 
+
+<<<<<<< HEAD
+* `blast-epitopes-BrainS-filtered.txt  |  txt file` A file containing the blast table with matches between epitopes and BrainS sequences.
+
+* `blast-epitopes-BrainS-protein_id-gene_name.txt  |  txt file` A file containing the protein ids and gene names of BrainS proteins that match with epitopes.
+
+* `blast-epitopes-BrainS-gene_name.txt  |  txt file` A file containing the gene names of BrainS proteins that match with epitopes.
+
+* `blast-epitopes-BrainS-protein_id.txt  |  txt file` A file containing the protein ids of BrainS proteins that match with epitopes.
+
+* `Random-NO_BrainS-Matches.txt  |  txt file` A file containing the number of matching sequences from the random sampling of NO BrainS files.  
+
+* `BrainS*  |  blastpdb files` Files containing the blastp database from BrainS proteins.  
 
 ---
 
-### Docker usage
+#### Cite us
 
-TO-DO
+=======
+#### Cite us
 
----
-#### References
-Under the hood Proteomic compare uses some coding tools, please include the following ciations in your work:
-
-* Di Tommaso, P., Chatzou, M., Floden, E. W., Barja, P. P., Palumbo, E., & Notredame, C. (2017). Nextflow enables reproducible computational workflows. Nature Biotechnology, 35(4), 316–319. doi:10.1038/nbt.3820
-
-* Team, R. C. (2017). R: a language and environment for statistical computing. R Foundation for Statistical Computing, Vienna. http s. www. R-proje ct. org.
-
-TO-DO: explore citations and ackowledgments for used R packages.
+>>>>>>> 7a1f33cb02a7efb76a866844852550df165c738a
+TO-DO: add reference to our paper once published
 
 ---
 
 ### Contact
-If you have questions, requests, or bugs to report, open an issue in github, or email <iaguilaror@gmail.com>
+If you have questions, requests, or bugs to report, open an issue in github, or email <david.valle.edu@gmail.com>
 
 #### Dev Team
-Israel Aguilar-Ordonez <iaguilaror@gmail.com>   
+<<<<<<< HEAD
 
-### Cite us
- TO-DO
+David Valle-Garcia <david.valle.edu@gmail.com>   
+
+=======
+David Valle-Garcia <david.valle.edu@gmail.com>   
+
+>>>>>>> 7a1f33cb02a7efb76a866844852550df165c738a

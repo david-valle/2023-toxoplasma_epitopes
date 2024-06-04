@@ -1,0 +1,111 @@
+
+
+
+   BepiPred 1.0		INSTALLATION INSTRUCTIONS
+
+
+   DESCRIPTION
+
+   BepiPred predicts the location of linear B-cell epitopes in proteins using
+   a combination of a hidden Markov  model and a propensity scale method. The
+   method is described in detail in the following article:
+
+   Improved method for predicting linear B-cell epitopes.
+   Jens Erik Pontoppidan Larsen, Ole Lund and Morten Nielsen
+   Immunome Research 2:2, 2006.
+
+   Center  for  Biological  Sequence  Analysis
+   BioCentrum-DTU
+   Technical University of Denmark
+   DK-2800 Lyngby, Denmark
+
+   Currently BepiPred 1.0 will run on the following UNIX platforms:
+
+	UNIX		tested on
+
+	IRIX		     6.5
+	IRIX64		     6.5
+	Linux		SuSE 9.3
+
+
+   DOWNLOAD
+
+   By special agreement only; contact software@cbs.dtu.dk for details.
+   
+   The package consists of two files:
+
+      BepiPred-1.0.readme		this file
+      BepiPred-1.0.<unix>.tar.Z		compressed TAR archive
+     
+   where <unix> is one of the platforms mentioned above.
+
+   After installation BepiPred will occupy at most 15 MB of diskspace.
+
+
+   INSTALLATION
+
+   0. Make sure that the following programs are available on your system:
+
+	uname	(usually /bin/uname)
+	paste	(        /bin/paste)
+	echo	(        /bin/echo)
+	gawk	(or equivalent, e.g. nawk)
+	perl	(usually /usr/bin/perl)
+
+   1. Decide where you wish to keep the software. Uncompress and untar
+      the package in that location:
+
+      cat bepipred-1.0.<unix>.tar.Z | uncompress | tar xvf -
+
+      This will produce a directory 'bepipred-1.0'. The size of the installed
+      package is at most 15 MB, depending on which binaries are included.
+
+   2. Edit the paragraph labelled "GENERAL SETTINGS, CUSTOMIZE" at the top of
+      the file "bepipred". Configure the following variables:
+
+	    variable	    set to the full path to:
+	    ---------------------------------------------------------
+	    BP  	    'bepipred-1.0' directory
+	    TMP 	    location for temporary data e.g. /var/tmp
+	    ECHO	    'echo' executable
+	    AWK 	    'awk' executable
+	    PERL	    'perl' executable
+	    --------------------------------------------------------
+
+      Make sure that the settings you enter point at existing and operational
+      utilities. You might need to modify them after the testing (see below).
+
+   3. Make sure that the directory specified  by the variable TMP (see above)
+      has the sticky bit set.  The listing should read  "drwxrwxrwt ...".  If
+      the sticky bit is not set, set it:
+
+      chmod 1777 <dir name>
+
+   4. Test the package:
+   
+      ./bepipred test/CHO.fsa           # one sequence
+      ./bepipred -t 0.90 test/CHO.fsa   # one sequence, higher threshold
+      ./bepipred Pellequer.fsa          # many sequences
+
+   5. Copy the 'bepipred' script to a directory in the users' path.
+
+   6. Copy the 'bepipred.1' file to a appropriate location in your manual
+      system. If you need a compiled version try running:
+
+      man -d bepipred.1 | compress >bepipred.Z
+
+      or:
+
+      neqn bepipred.1 | tbl | nroff -man | col | compress >bepipred.Z
+
+   7. Enjoy ...
+
+
+   PROBLEMS
+
+   Contact Kristoffer Rapacki, rapacki@cbs.dtu.dk in case of problems.
+   
+   Questions on the scientific aspects of the BepiPred method  should be sent
+   to Jens Erik Pontoppidan Larsen, jepl@cbs.dtu.dk
+
+   2006-08-23

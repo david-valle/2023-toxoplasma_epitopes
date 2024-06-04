@@ -1,0 +1,9 @@
+include valid_allele_names/human_allele_names.p
+include valid_allele_names/dla_allele_names.p
+include valid_allele_names/bola_allele_names.p
+include valid_allele_names/fla_allele_names.p
+include valid_allele_names/fish_allele_names.p
+include valid_allele_names/nhp_allele_names.p
+include valid_allele_names/rt1_allele_names.p
+include valid_allele_names/ovar_allele_names.p
+include valid_allele_names/sla_allele_names.p

@@ -1,0 +1,228 @@
+#! /bin/tcsh -f
+
+# bepipred. Linear B-cell epitope predictor.
+#
+# Jens Erik Pontoppidan Larsen, jepl
+# 
+#
+# VERSIONS:	2005 Apr  4	1.0	launch
+#		2006 Jul 18	1.0b	started
+# 		2006 Aub 22	1.0b	finished
+# 
+
+###############################################################################
+#       GENERAL SETTINGS, CUSTOMIZE TO YOUR SITE
+###############################################################################
+
+# full path to the 'bepipred-1.0' directory
+setenv	BP	/bepipred-path/bepipred-1.0b
+
+# determine platform (do not change this unless you don't have 'uname'!)
+setenv	UNIX	`uname -s`
+setenv	ARCH	`uname -m`
+
+# determine where to store temporary files
+setenv  TMP     /tmp
+
+setenv ECHO	"/bin/echo -e"
+setenv AWK	/gawk-path
+setenv PERL	/usr/bin/perl
+
+###############################################################################
+#       NOTHING SHOULD NEED CHANGING BELOW THIS LINE!
+###############################################################################
+
+# validate custom settings
+if ( ! $?BP ) then					# mandatory: BP
+   echo bepipred: BP must be set
+   exit 1
+else if ( ! -d $BP ) then
+   echo bepipred: cannot find BP in $BP
+   exit 1
+endif
+
+if ( ! $?ECHO ) then					# mandatory: ECHO
+   echo bepipred: ECHO must be set
+   exit 2
+else if ( "$ECHO" != "echo" ) then
+   if ( ! -x `echo $ECHO | sed 's/ .*//'` ) then
+      echo bepipred: cannot execute \"$ECHO\" as ECHO
+      exit 2
+endif
+
+if ( ! $?AWK ) then					# mandatory: AWK
+   $ECHO bepipred: AWK must be set
+   exit 3
+else if ( ! -x $AWK ) then
+   $ECHO bepipred: cannot execute \"$AWK\" as AWK
+   exit 4
+endif
+
+if ( ! $?PERL ) then					# mandatory: PERL
+   $ECHO bepipred: PERL must be set
+   exit 3
+else if ( ! -x $PERL ) then
+   $ECHO bepipred: cannot execute \"$PERL\" as PERL
+   exit 4
+endif
+
+# validate compiled binaries
+foreach b (fasta2proppred fasta2pep seq2hmm)
+
+    if ( ! -x $BP/bin/${b}_$UNIX-$ARCH ) then
+       $ECHO bepipred: no \"$b\" executable for $UNIX-$ARCH
+       exit 5
+    endif
+
+end
+
+# other settings ==============================================================
+setenv	BPTMP		$TMP/bepipred-$$
+
+set	t_opt		= 0.35		# threshold for YES
+set	infile		= ()		# if no file use stdin
+
+
+# verify settings =============================================================
+
+# system
+setenv	BPBIN		$BP/bin
+setenv	BPETC		$BP/etc
+
+setenv	VER		1.0b
+setenv	VERDATE		"August 2006"
+
+
+# called correctly? ===========================================================
+while ( $#argv )
+      switch ($1)
+      case '-h'			# -h (help, print usage note)
+            set h_opt
+      breaksw
+      case '-k'			# -k (keep files in temporary dir.)
+            set k_opt
+      breaksw
+      case '-s'			# -s (sequence in the output)
+            set s_opt
+      breaksw
+      case '-t'			# -t arg (score threshold for yes)
+            shift
+            set t_opt = $1
+      breaksw
+      case '-V'			# -V (print version and release date)
+            set V_opt
+      breaksw
+      default:
+            set infile = ($infile $1)
+      breaksw
+      endsw
+      shift			# next argument
+end
+
+# print version and release date
+if ( $?V_opt ) then
+   $ECHO "bepipred $VER, $VERDATE"
+   exit
+endif
+
+# print usage note
+if ( $?h_opt ) then
+   $ECHO "usage: bepipred [-h] [-k] [-s] [-t threshold] file.fsa\n"
+   $ECHO "  -h    print this text"
+   $ECHO "  -k    keep temporary folder in '$TMP/bepipred-[PID]'"
+   $ECHO "  -s    include the input sequence(s) in the output"
+   $ECHO "  -t #  score threshold for positive prediction\n"
+   $ECHO "  -V    print version and release date\n"
+   exit
+endif
+
+# check input files
+foreach f ($infile)
+   if ( ! -e $f ) then
+      $ECHO bepipred: cannot open \"$f\"
+      exit -1
+   endif
+end
+
+			### Ol Korrekt ###
+
+mkdir $BPTMP
+
+
+# process input files =========================================================
+cat $infile >$BPTMP/query.fsa
+cd $BPTMP
+
+$AWK -f $BPBIN/checkfasta.awk query.fsa > query.fsa.chk
+
+# split the fasta-file into entries
+@ NoOfFiles = `$PERL $BPBIN/fastasplit2.pl <query.fsa.chk | $AWK '{print $5}'`
+
+if ( $NoOfFiles ) then
+   $ECHO '##gff-version 2'			# print output header
+   $ECHO '##source-version bepipred-'$VER
+   $ECHO '##date' `date "+%Y-%m-%d"`
+else
+   $ECHO 'bepipred: no input sequences
+   exit -2
+endif
+
+# main loop ===================================================================
+@ i = 1
+while ( $i <= $NoOfFiles )
+
+      # run the predictions by the parker scale
+      $BPBIN/fasta2proppred_$UNIX-$ARCH -w 9 -e \
+         -sf $BP/etc/parker.dat seq.$i.fsa \
+         | grep -v '#' > seq.$i.fsa.parker
+
+      # make the first columns of the output
+      $AWK '{printf("%-20s %6d %1s\n",substr($1,1,20),$2,$3)}' \
+         seq.$i.fsa.parker \
+         > seq.$i.fsa.parker.col1-3
+
+      $AWK '{print $5}' seq.$i.fsa.parker \
+         > seq.$i.fsa.parker.pred
+
+      # normalize the output
+      $AWK '{print ($1-0.0624)/0.59373 }' seq.$i.fsa.parker.pred \
+         > seq.$i.fsa.parker.pred.norm
+
+      # run the predictions by the Ungapped Markov Model
+      $BP/bin/fasta2pep_$UNIX-$ARCH -l 5 -x seq.$i.fsa > seq.$i.fsa.pep
+      $BP/bin/seq2hmm_$UNIX-$ARCH -xs \
+         -hmm $BP/etc/AntiJen2.how.pep.pos.fsa.bmat seq.$i.fsa.pep \
+	 | grep -v '#' | $AWK '{print $2,$3}' \
+	 | $PERL $BP/bin/smoothpred.pl -e -w 9 | $AWK '{print $2}' \
+	 > seq.$i.fsa.pep.UngMM1.pred
+
+      # normalize the output
+      $AWK '{print ($1-0.0041)/0.66290 }' seq.$i.fsa.pep.UngMM1.pred \
+         > seq.$i.fsa.pep.UngMM1.pred.norm
+
+      # make the combination
+      paste seq.$i.fsa.parker.pred.norm \
+         seq.$i.fsa.pep.UngMM1.pred.norm \
+	 | $AWK '{printf("%8.3f \n", $1*0.4 + $2*0.6) }' \
+	 > seq.$i.fsa.comb.pred
+
+      # print output
+      paste -d" " seq.$i.fsa.parker.col1-3 seq.$i.fsa.comb.pred \
+         | $AWK -v N=$i -v S=$?s_opt -v T=$t_opt -v V=$VER \
+	        -f $BP/bin/mkgff.awk
+
+      @ i++ # next entry
+
+end # for each sequence
+
+
+# clean up ====================================================================
+if ( $?k_opt ) then
+   $ECHO "# temporary files kept in $BPTMP"
+else
+   cd /
+   rm -rf $BPTMP
+endif
+
+
+# end of script ===============================================================
