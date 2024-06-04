@@ -50,8 +50,11 @@ These programs are needed if you wish to use your own environment (not needed if
 
 ```
 bedtools version: 2.30.0
+```
+```
 blast version: 2.15.0
 ```
+
 
 ---
 
@@ -59,6 +62,8 @@ blast version: 2.15.0
 Download pipeline from Github repository:  
 ```
 git clone https://github.com/david-valle/2023-toxoplasma_epitopes
+```
+```
 cd 2023-toxoplasma_epitopes
 ```
 
@@ -68,6 +73,9 @@ cd 2023-toxoplasma_epitopes
 Run: 
 ```
 conda env create -f ./env/epitopes_conda.yml
+
+```
+```
 conda activate epitopes
 ```
 
