@@ -18,6 +18,10 @@ If you have questions, problems or suggestions, contact David Valle-Garcia (see 
 ### TO-DO(s) in future iterations  
 * Change all scripts to Python
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+* Make a conda environment for easy deployment and installation
+>>>>>>> 7a1f33cb02a7efb76a866844852550df165c738a
 =======
 * Make a conda environment for easy deployment and installation
 >>>>>>> 7a1f33cb02a7efb76a866844852550df165c738a
@@ -59,6 +63,7 @@ Note: conda is not needed but advised to install all python packages and depende
 ```
 bedtools version: 2.30.0
 ```
+<<<<<<< HEAD
 >>>>>>> 7a1f33cb02a7efb76a866844852550df165c738a
 
 These programs are needed if you wish to use your own environment (not needed if you will use Anaconda):
@@ -67,6 +72,8 @@ These programs are needed if you wish to use your own environment (not needed if
 | [R](https://www.r-project.org/) | 4.3.3 | Rscript |
 | [Linear B cell epitope predictor](http://tools.iedb.org/bcell/download/) | 3.0 | predict_antibody_epitope.py |
 | [blastp](https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html) | 2.6.0 | blastp |
+=======
+>>>>>>> 7a1f33cb02a7efb76a866844852550df165c738a
 
 #### Python packages required (included in conda environment you dont need to install them):
 
@@ -76,6 +83,9 @@ bedtools version: 2.30.0
 blast version: 2.15.0
 =======
 cowplot version: 1.1.1
+<<<<<<< HEAD
+>>>>>>> 7a1f33cb02a7efb76a866844852550df165c738a
+=======
 >>>>>>> 7a1f33cb02a7efb76a866844852550df165c738a
 ```
 
@@ -85,8 +95,12 @@ cowplot version: 1.1.1
 Download pipeline from Github repository:  
 ```
 <<<<<<< HEAD
+<<<<<<< HEAD
 git clone https://github.com/david-valle/2023-toxoplasma_epitopes
 cd 2023-toxoplasma_epitopes
+=======
+git@github.com:david-valle/2023-toxoplasma_epitopes.git
+>>>>>>> 7a1f33cb02a7efb76a866844852550df165c738a
 =======
 git@github.com:david-valle/2023-toxoplasma_epitopes.git
 >>>>>>> 7a1f33cb02a7efb76a866844852550df165c738a
@@ -94,6 +108,7 @@ git@github.com:david-valle/2023-toxoplasma_epitopes.git
 
 ---
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 ### Environment set up
 Run: 
@@ -112,6 +127,12 @@ conda activate epitopes
 
 * Estimated test time:  **20 minute(s)**  
 
+=======
+## Replicate our analysis:
+
+* Estimated test time:  **20 minute(s)**  
+
+>>>>>>> 7a1f33cb02a7efb76a866844852550df165c738a
 1. To execute our pipeline, run:  
 ```
 ./replicate-analysis.sh
@@ -128,6 +149,9 @@ conda activate epitopes
 ```
 ./results/
 ```
+<<<<<<< HEAD
+>>>>>>> 7a1f33cb02a7efb76a866844852550df165c738a
+=======
 >>>>>>> 7a1f33cb02a7efb76a866844852550df165c738a
 
 ```
@@ -136,6 +160,7 @@ conda activate epitopes
 Note that test data does not give any matching epitope but the pipeline should run very fast. 
 ---
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 ## Replicate our analysis:
 
@@ -189,11 +214,21 @@ Inside the directory results/ you can find the following:
 * `blast-epitopes-BrainS-filtered.txt  |  txt file` A file containing the blast table with matches between epitopes and BrainS sequences.
 
 * `blast-epitopes-BrainS-protein_id-gene_name.txt  |  txt file` A file containing the protein ids and gene names of BrainS proteins that match with epitopes.
+=======
+### Pipeline Results
+
+Inside the directory results/ you can find the following:
+
+* A `.merged-all_methods.bed bed file` A file with the epitopes coordinates from T. gondii.  
+
+* A `.sequence-all_methods.fasta fasta file` A file containing epitopes sequences.   
+>>>>>>> 7a1f33cb02a7efb76a866844852550df165c738a
 
 * `blast-epitopes-BrainS-gene_name.txt  |  txt file` A file containing the gene names of BrainS proteins that match with epitopes.
 
 * `blast-epitopes-BrainS-protein_id.txt  |  txt file` A file containing the protein ids of BrainS proteins that match with epitopes.
 
+<<<<<<< HEAD
 * `Random-NO_BrainS-Matches.txt  |  txt file` A file containing the number of matching sequences from the random sampling of NO BrainS files.  
 
 * `BrainS*  |  blastpdb files` Files containing the blastp database from BrainS proteins.  
@@ -202,6 +237,10 @@ Inside the directory results/ you can find the following:
 
 #### Cite us
 
+=======
+#### Cite us
+
+>>>>>>> 7a1f33cb02a7efb76a866844852550df165c738a
 =======
 #### Cite us
 
@@ -215,9 +254,14 @@ If you have questions, requests, or bugs to report, open an issue in github, or 
 
 #### Dev Team
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 David Valle-Garcia <david.valle.edu@gmail.com>   
 
+=======
+David Valle-Garcia <david.valle.edu@gmail.com>   
+
+>>>>>>> 7a1f33cb02a7efb76a866844852550df165c738a
 =======
 David Valle-Garcia <david.valle.edu@gmail.com>   
 
