@@ -146,7 +146,11 @@ Inside the directory results/ you can find the following:
 
 #### Cite us
 
-TO-DO: add reference to our paper once published
+If you use our results or pipeline, please, cite us!
+
+https://doi.org/10.3390/biom14080933
+
+Meza-Sosa, K.F.; Valle-Garcia, D.; González-Conchillos, H.; Blanco-Ayala, T.; Salazar, A.; Flores, I.; Gómez-Manzo, S.; González Esquivel, D.F.; Pérez de la Cruz, G.; Pineda, B.; Pérez de la Cruz, V. Molecular Mimicry by Toxoplasma gondii B-Cell Epitopes of Neurodevelopmental Proteins: An Immunoinformatic Approach. Biomolecules 2024, 14, 933. 
 
 ---
 
